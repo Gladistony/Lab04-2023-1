@@ -4,7 +4,7 @@ import list.FilaComPilha;
 
 public class ClassFilaComPilha implements FilaComPilha {
 
-    private ClassPilha _dados_1,_dados_2;
+    private ClassPilha _dados_1;
     private int _tamanho;
 
     public ClassFilaComPilha(){
@@ -12,28 +12,25 @@ public class ClassFilaComPilha implements FilaComPilha {
         _tamanho = 0;
     }
 
-    public ClassPilha trocar(ClassPilha a){
-        ClassPilha temp = new ClassPilha();
-        while (! a.isEmpty()) {
-            temp.push(a.pop());
-        }
-        return temp;
-    }
-
 
     @Override
     public void enqueue(int item) {
-        _dados_1.push(item);
-        _dados_2 = trocar(_dados_1);
+        ClassPilha temp = new ClassPilha();
+        while (!_dados_1.isEmpty()) {
+            temp.push(_dados_1.pop());
+        }
+        temp.push(item);
+        while (!temp.isEmpty()) {
+            _dados_1.push(temp.pop());
+        }
         _tamanho++;
     }
 
     @Override
     public int dequeue() {
-        int r = _dados_2.pop();
-        _dados_1 = trocar(_dados_2);
         _tamanho--;
-        return r;
+        return _dados_1.pop();
+       
     }
 
     @Override
